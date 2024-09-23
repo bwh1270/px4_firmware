@@ -5,31 +5,176 @@
 # @type Hexarotor x
 # @class Copter
 #
-# @maintainer Lorenz Meier <lorenz@px4.io>
+# @maintainer Woohyun Byun <imbwh@cau.ac.kr>
 #
 # @board bitcraze_crazyflie exclude
 #
 
 . ${R}etc/init.d/rc.mc_defaults
 
-# MAV_TYPE_HEXAROTOR 13
-param set-default MAV_TYPE 13
 
+##########
+# System #
+##########
+# use IO board for gimbal
+param set-default SYS_USE_IO 1  # IO enabled (RC & PWM)
+
+# circuit breaker
+param set-default CBRK_BUZZER 782097
+param set-default CBRK_SUPPLY_CHK 894281
+
+# RTL Parameters
+param set-default RTL_DESCEND_ALT 5
+param set-default RTL_RETURN_ALT 5
+
+# commander parameters
+param set-default COM_DISARM_LAND 0.5
+param set-default COM_ARM_AUTH_TO -1
+
+
+###########
+# Logging #
+###########
+param set-default SDLOG_PROFILE 17  # 131
+
+
+###########
+# MAVLink #
+###########
+param set-default MAV_PROTO_VER 2   # always use version 2
+param set-default MAV_0_CONFIG 101
+param set-default MAV_1_CONFIG 102
+param set-default MAV_1_RATE 80000  # B/s
+param set-default SER_TEL1_BAUD 921600
+
+
+#################
+# Control Gains #
+#################
+# position control
+param set-default MPC_Z_VEL_P_ACC 5
+param set-default MPC_Z_VEL_I_ACC 3
+param set-default MPC_POS_MODE 3
+param set-default MPC_THR_HOVER 0.3
+param set-default MPC_TKO_SPEED 1
+param set-default MPC_TILTMAX_AIR 45
+param set-default MPC_MAN_Y_MAX 120
+param set-default MPC_ACC_HOR_MAX 10
+param set-default MPC_ACC_UP_MAX 4
+param set-default MPC_ACC_DOWN_MAX 5
+param set-default MPC_VEL_MANUAL 5
+param set-default MPC_XY_CRUISE 5
+param set-default MPC_XY_VEL_MAX 5
+param set-default MPC_LAND_ALT1 3
+param set-default MPC_LAND_ALT2 1
+
+# attitude and rate control
+param set-default MC_ROLL_P 6.0
+param set-default MC_ROLLRATE_K
+param set-default MC_ROLLRATE_P 0.10
+param set-default MC_ROLLRATE_I 0.10
+param set-default MC_ROLLRATE_D 0.0076
+
+param set-default MC_PITCH_P 6.0
+param set-default MC_PITCHRATE_K 1.850
+param set-default MC_PITCHRATE_P 0.100
+param set-default MC_PITCHRATE_I 0.010
+param set-default MC_PITCHRATE_D 0.0062
+
+param set-default MC_YAWRATE_P 0.10
+param set-default MC_YAWRATE_I 0.01
+
+# loop frequency
+param set-default IMU_INTEG_RATE 200    # IMU integration rate
+param set-default IMU_GYRO_RATEMAX 400  # rate loop rate
+
+# arcobatic mode
+param set-default MC_ACRO_EXPO 0
+param set-default MC_ACRO_EXPO_Y 0
+param set-default MC_ACRO_P_MAX 200
+param set-default MC_ACRO_R_MAX 200
+param set-default MC_ACRO_SUPEXPO 0
+param set-default MC_ACRO_SUPEXPOY 0
+param set-default MC_ACRO_Y_MAX 150
+
+
+###########
+# Filters #
+###########
+param set-default IMU_GYRO_NF0_BW 16
+param set-default IMU_GYRO_NF0_FRQ 30
+param set-default IMU_DGYRO_CUTOFF 20
+param set-default IMU_GYRO_CUTOFF 40
+
+
+###########
+# Sensors #
+###########
+param set-default UAVCAN_ENABLE 2      # UAVCAN sensors (Sensors Automatic Config)
+param set-default UAVCAN_PUB_RTCM 1    # RTK_GPS (Enabled)
+param set-default UAVCAN_SUB_BAT 1     # PMU (Raw data)
+
+param set-default EKF2_REQ_HDRIFT 0.3
+param set-default EKF2_REQ_SACC 1
+param set-default EKF2_REQ_VDRIFT 0.3
+
+param set-default SENS_TFMINI_CFG 202  # Lidar (GPS2)
+param set-default EKF2_MIN_RNG 0.03
+param set-default EKF2_RNG_A_VMAX 2
+
+# offset
+param set-default EKF2_RNG_NOISE 0.05
+param set-default EKF2_RNG_POS_X 0.09
+param set-default EKF2_RNG_POS_Z 0.09
+param set-default EKF2_GPS_POS_Y -0.097
+param set-default EKF2_GPS_POS_Z -0.226
+param set-default EKF2_IMU_POS_Z -0.066
+
+
+#################
+# Configuration #
+#################
+param set-default MAV_TYPE 13  # Hexarotor
+
+# NED (FRD)
 param set-default CA_ROTOR_COUNT 6
 param set-default CA_ROTOR0_PX 0.0
 param set-default CA_ROTOR0_PY 0.5
-param set-default CA_ROTOR0_KM -0.05
 param set-default CA_ROTOR1_PX 0.0
 param set-default CA_ROTOR1_PY -0.5
+param set-default CA_ROTOR1_KM -0.05
 param set-default CA_ROTOR2_PX 0.43
 param set-default CA_ROTOR2_PY -0.25
-param set-default CA_ROTOR2_KM -0.05
 param set-default CA_ROTOR3_PX -0.43
 param set-default CA_ROTOR3_PY 0.25
+param set-default CA_ROTOR3_KM -0.05
 param set-default CA_ROTOR4_PX 0.43
 param set-default CA_ROTOR4_PY 0.25
+param set-default CA_ROTOR4_KM -0.05
 param set-default CA_ROTOR5_PX -0.43
 param set-default CA_ROTOR5_PY -0.25
-param set-default CA_ROTOR5_KM -0.05
 
 
+###########
+# Outputs #
+###########
+param set-default PWM_AUX_TIM0 -4  # Aux1-4 (DShot300)
+param set-default PWM_AUX_TIM1 -4  # Aux5-6 (DShot300)
+param set-default PWM_MAIN_TIM1 100  # Gimbal (PWM100)
+
+param set-default THR_MDL_FAC 0.8  # Thr-PWM curve
+
+# motors
+param set PWM_AUX_FUNC1 104
+param set PWM_AUX_FUNC2 105
+param set PWM_AUX_FUNC3 101
+param set PWM_AUX_FUNC4 106
+param set PWM_AUX_FUNC5 103
+param set PWM_AUX_FUNC6 102
+param set-default PWM_MAIN_FUNC3 421  # Gimbal Pitch
+
+param set-default PWM_MAIN_MAX3 1900
+param set-default PWM_MAIN_MIN3 1100
+param set-default DSHOT_MIN 0.02
+param set-default DSHOT_3D_DEAD_H 1050
+param set-default DSHOT_3D_DEAD_L 950
