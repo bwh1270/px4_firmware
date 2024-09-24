@@ -43,9 +43,13 @@ param set-default SDLOG_PROFILE 17  # 131
 ###########
 param set-default MAV_PROTO_VER 2   # always use version 2
 param set-default MAV_0_CONFIG 101
-param set-default MAV_1_CONFIG 102
-param set-default MAV_1_RATE 80000  # B/s
-param set-default SER_TEL1_BAUD 921600
+
+########
+# ROS2 #
+########
+param set-default MAV_1_CONFIG 0
+param set-default UXRCE_DDS_CFG 102
+param set-default SER_TEL2_BAUD 921600
 
 
 #################
