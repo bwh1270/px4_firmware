@@ -55,6 +55,8 @@
 #include <uORB/Subscription.hpp>
 #include <uORB/SubscriptionMultiArray.hpp>
 #include <uORB/topics/vehicle_status.h>
+#include <uORB/topics/hover_thrust_estimate.h>
+#include "streams/HOVER_THRUST_ESTIMATE.hpp"
 
 #include "streams/ACTUATOR_OUTPUT_STATUS.hpp"
 #include "streams/ALTITUDE.hpp"
@@ -481,8 +483,11 @@ static const StreamListItem streams_list[] = {
 	create_stream_list_item<MavlinkStreamUavionixADSBOutCfg>(),
 #endif // UAVIONIX_ADSB_OUT_CFG_HPP
 #if defined(UAVIONIX_ADSB_OUT_DYNAMIC_HPP)
-	create_stream_list_item<MavlinkStreamUavionixADSBOutDynamic>()
+	create_stream_list_item<MavlinkStreamUavionixADSBOutDynamic>(),
 #endif // UAVIONIX_ADSB_OUT_DYNAMIC_HPP
+#if defined(HOVER_THRUST_ESTIMATE_HPP)
+	create_stream_list_item<MavlinkStreamHoverThrustEstimate>()
+#endif // HOVER_THRUST_ESTIMATE
 };
 
 const char *get_stream_name(const uint16_t msg_id)
